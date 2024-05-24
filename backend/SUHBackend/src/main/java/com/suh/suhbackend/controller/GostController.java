@@ -22,14 +22,29 @@ public class GostController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Gost>> getAllGost() {
-        return new ResponseEntity<List<Gost>>(gostService.listaGost(), HttpStatus.OK);
+        return new ResponseEntity<>(gostService.listaGost(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Gost>> getGostById(@PathVariable int id) {
-        return new ResponseEntity<Optional<Gost>>(gostService.getGost(id), HttpStatus.OK);
+        return new ResponseEntity<>(gostService.getGost(id), HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Gost> updateGost(@PathVariable int id, @RequestBody Gost gostDetails) {
+        return ResponseEntity.ok(gostService.updateGost(id, gostDetails));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGost(@PathVariable int id) {
+        gostService.deleteGost(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Gost> createGost(@RequestBody Gost gost) {
+        return ResponseEntity.ok(gostService.createGost(gost));
+    }
 
 }
 

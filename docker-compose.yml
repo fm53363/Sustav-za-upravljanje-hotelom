@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: HotelManagement
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  springapp:
+    build:
+      context: ./backend/SUHBackend
+      dockerfile: Dockerfile
+    container_name: springapp
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/HotelManagement
+      SPRING_DATASOURCE_USERNAME: test
+      SPRING_DATASOURCE_PASSWORD: test
+    ports:
+      - "8080:8080"

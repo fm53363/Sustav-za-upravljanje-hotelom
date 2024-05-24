@@ -21,12 +21,17 @@ public class RezervacijaController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Rezervacija>> getAllRezervacija() {
-        return new ResponseEntity<List<Rezervacija>>(rezervacijaService.listaRezervacija(), HttpStatus.OK);
+        return new ResponseEntity<>(rezervacijaService.listaRezervacija(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Rezervacija>> getRezervacijaById(@PathVariable int id) {
-        return new ResponseEntity<Optional<Rezervacija>>(rezervacijaService.getRezervacija(id), HttpStatus.OK);
+        return new ResponseEntity<>(rezervacijaService.getRezervacija(id), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Rezervacija> createRezervacija(@RequestBody Rezervacija rezervacija) {
+        return ResponseEntity.ok(rezervacijaService.createRezervacija(rezervacija));
     }
 
 
