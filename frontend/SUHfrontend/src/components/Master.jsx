@@ -5,18 +5,32 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import Detail from "./Detail"; // Importing the Detail component
+import ButtonGroup from "react-bootstrap/ButtonGroup"; // Add this import for ButtonGroup
 
 export default function Master() {
   const [reservations, setReservations] = useState(null);
   const [guests, setGuests] = useState(null);
 
-  // save id of selced guest
-  const [selectedGuest, setSelectedGuest] = useState("");
+  const [selectedGuest, setSelectedGuest] = useState(null);
   const [guestReservations, setGuestReservations] = useState([]);
+  const [currentReservationIndex, setCurrentReservationIndex] = useState(0);
 
   const handleGuestChange = (event) => {
     setSelectedGuest(event.target.value);
+  };
+
+  const handleNextReservation = () => {
+    setCurrentReservationIndex((prevIndex) =>
+      prevIndex < guestReservations.length - 1 ? prevIndex + 1 : prevIndex
+    );
+  };
+
+  const handlePreviousReservation = () => {
+    setCurrentReservationIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : prevIndex
+    );
   };
 
   useEffect(() => {
@@ -25,17 +39,16 @@ export default function Master() {
         const response = await axios.get("/api/rezervacija/getAll");
         return response.data;
       } catch (error) {
-        console.error("Error fetching reservations:", err);
+        console.error("Error fetching reservations:", error);
       }
     };
 
     const fetchGuests = async () => {
       try {
         const response = await axios.get("/api/gost/getAll");
-
         return response.data;
-      } catch (err) {
-        console.error("Error fetching guests:", err);
+      } catch (error) {
+        console.error("Error fetching guests:", error);
       }
     };
 
@@ -50,22 +63,28 @@ export default function Master() {
   }, []);
 
   useEffect(() => {
-    // Filter reservations based on selected guest ID
+    if (guests && guests.length > 0) {
+      setSelectedGuest(guests[0].idGost);
+    }
+  }, [guests]);
+
+  useEffect(() => {
     if (selectedGuest && reservations) {
       const filteredReservations = reservations.filter(
         (reservation) => reservation.idGost === parseInt(selectedGuest)
       );
       setGuestReservations(filteredReservations);
+      setCurrentReservationIndex(0); // Reset index when guest changes
     } else {
       setGuestReservations([]);
     }
   }, [selectedGuest, reservations]);
 
-  console.log(guests);
+  const currentReservation = guestReservations[currentReservationIndex];
 
   return (
     <Container>
-      <Row>
+      <Row className="mb-3 border-bottom">
         <Col></Col>
         <Col>
           {guests && (
@@ -86,33 +105,76 @@ export default function Master() {
           )}
         </Col>
         <Col></Col>
-        <Col></Col>
-
-        <Col></Col>
       </Row>
 
-      <Row>
+      <Row className="mb-3">
         <Col></Col>
-
         <Col>
-          <h3>Reservations for Selected Guest:</h3>
-          <ul>
-            {guestReservations.map((reservation) => (
-              <li key={reservation.sifraRezervacije}>
-                {`Reservation ID: ${reservation.sifraRezervacije}, Arrival: ${reservation.datumDolaska}, Departure: ${reservation.datumOdlaska}`}
-              </li>
-            ))}
-          </ul>
+          <div>
+            <h3>Reservation:</h3>
+            {currentReservation && (
+              <div>
+                <Row>
+                  <Col>
+                    <ButtonGroup>
+                      <Button
+                        variant="primary"
+                        onClick={handlePreviousReservation}
+                      >
+                        Previous
+                      </Button>{" "}
+                      <Button variant="primary" onClick={handleNextReservation}>
+                        Next
+                      </Button>
+                    </ButtonGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Label>
+                      Reservation ID:
+                      <Form.Control
+                        type="text"
+                        value={currentReservation.sifraRezervacije}
+                        disabled
+                      />
+                    </Form.Label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Label>
+                      Arrival:
+                      <Form.Control
+                        type="text"
+                        value={currentReservation.datumDolaska}
+                        disabled
+                      />
+                    </Form.Label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Label>
+                      Departure:
+                      <Form.Control
+                        type="text"
+                        value={currentReservation.datumOdlaska}
+                        disabled
+                      />
+                    </Form.Label>
+                  </Col>
+                </Row>
+              </div>
+            )}
+          </div>
         </Col>
         <Col></Col>
-        <Col></Col>
       </Row>
-      <Row>
-        {/* Rendering the Detail component with the reservation prop */}
+
+      <Row className="mb-3">
         <Col>
-          {guestReservations.length > 0 && (
-            <Detail reservation={guestReservations[0]} />
-          )}
+          {currentReservation && <Detail reservation={currentReservation} />}
         </Col>
       </Row>
     </Container>

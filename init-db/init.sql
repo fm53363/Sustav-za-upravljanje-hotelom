@@ -175,13 +175,7 @@ INSERT INTO Gost (ime, prezime, email) VALUES
                                            ('Ime1', 'Prezime1', 'gost1@example.com'),
                                            ('Ime2', 'Prezime2', 'gost2@example.com'),
                                            ('Ime3', 'Prezime3', 'gost3@example.com'),
-                                           ('Ime4', 'Prezime4', 'gost4@example.com'),
-                                           ('Ime5', 'Prezime5', 'gost5@example.com'),
-                                           ('Ime6', 'Prezime6', 'gost6@example.com'),
-                                           ('Ime7', 'Prezime7', 'gost7@example.com'),
-                                           ('Ime8', 'Prezime8', 'gost8@example.com'),
-                                           ('Ime9', 'Prezime9', 'gost9@example.com'),
-                                           ('Ime10', 'Prezime10', 'gost10@example.com');
+                                           ('Ime4', 'Prezime4', 'gost4@example.com');
 
 -- Insert data into Rezervacija table
 INSERT INTO Rezervacija (datumDolaska, datumOdlaska, idGost) VALUES
@@ -194,19 +188,7 @@ INSERT INTO Rezervacija (datumDolaska, datumOdlaska, idGost) VALUES
                                                                  ('2024-05-09', '2024-05-13', 3),
                                                                  ('2024-05-12', '2024-05-17', 3),
                                                                  ('2024-05-14', '2024-05-18', 4),
-                                                                 ('2024-05-04', '2024-05-08', 4),
-                                                                 ('2024-05-01', '2024-05-10', 5),
-                                                                 ('2024-05-02', '2024-05-06', 5),
-                                                                 ('2024-04-28', '2024-05-05', 6),
-                                                                 ('2024-05-05', '2024-05-07', 6),
-                                                                 ('2024-04-22', '2024-05-07', 7),
-                                                                 ('2024-05-01', '2024-05-04', 7),
-                                                                 ('2024-04-25', '2024-05-01', 8),
-                                                                 ('2024-05-11', '2024-05-14', 8),
-                                                                 ('2024-05-03', '2024-05-12', 9),
-                                                                 ('2024-05-13', '2024-05-17', 9),
-                                                                 ('2024-05-06', '2024-05-15', 10),
-                                                                 ('2024-04-28', '2024-05-05', 10);
+                                                                 ('2024-05-04', '2024-05-08', 4);
 
 -- Insert data into Placanje table
 INSERT INTO Placanje (iznos, nacinPlacanja, sifraRezervacije, idGost) VALUES
@@ -219,19 +201,7 @@ INSERT INTO Placanje (iznos, nacinPlacanja, sifraRezervacije, idGost) VALUES
                                                                           (230.40, 'Kartica', 7, 3),
                                                                           (460.85, 'Online', 8, 3),
                                                                           (756.80, 'Kartica', 9, 4),
-                                                                          (150.70, 'Gotovina', 10, 4),
-                                                                          (499.99, 'Gotovina', 11, 5),
-                                                                          (460.85, 'Online', 12, 5),
-                                                                          (200.50, 'Online', 13, 6),
-                                                                          (312.55, 'Kartica', 14, 6),
-                                                                          (300.00, 'Kartica', 15, 7),
-                                                                          (274.90, 'Gotovina', 16, 7),
-                                                                          (400.75, 'Gotovina', 17, 8),
-                                                                          (367.45, 'Online', 18, 8),
-                                                                          (600.25, 'Online', 19, 9),
-                                                                          (498.60, 'Kartica', 20, 9),
-                                                                          (255.50, 'Kartica', 21, 10),
-                                                                          (456.90, 'Kartica', 22, 10);
+                                                                          (150.70, 'Gotovina', 10, 4);
 
 -- Insert data into RezervacijaSoba table
 -- Insert data into RezervacijaSoba table
