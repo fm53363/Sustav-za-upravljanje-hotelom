@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import Home from "./Home";
 import Rezervacije from "./Rezervacije";
+import Gosti from "./Gosti";
 
 export default function Navbarcomp() {
   return (
@@ -26,11 +27,14 @@ export default function Navbarcomp() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/home">
+              <Nav.Link as={Link} to="/">
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to="/rezervacije">
                 Rezervacije
+              </Nav.Link>
+              <Nav.Link as={Link} to="/gosti">
+                Gosti
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
@@ -43,6 +47,7 @@ export default function Navbarcomp() {
             path="/rezervacije"
             element={<Rezervacije></Rezervacije>}
           ></Route>
+          <Route path="/gosti" element={<Gosti></Gosti>}></Route>
 
           <Route path="/" element={<Home></Home>}></Route>
         </Routes>

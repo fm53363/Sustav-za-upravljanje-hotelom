@@ -111,7 +111,6 @@ export default function Master() {
         <Col></Col>
         <Col>
           <div>
-            <h3>Reservation:</h3>
             {currentReservation && (
               <div>
                 <Row>
@@ -121,10 +120,10 @@ export default function Master() {
                         variant="primary"
                         onClick={handlePreviousReservation}
                       >
-                        Previous
+                        Sljedeća
                       </Button>{" "}
                       <Button variant="primary" onClick={handleNextReservation}>
-                        Next
+                        Prethodna
                       </Button>
                     </ButtonGroup>
                   </Col>
@@ -132,7 +131,7 @@ export default function Master() {
                 <Row>
                   <Col>
                     <Form.Label>
-                      Reservation ID:
+                      sifra Rezervacije:
                       <Form.Control
                         type="text"
                         value={currentReservation.sifraRezervacije}
@@ -144,7 +143,7 @@ export default function Master() {
                 <Row>
                   <Col>
                     <Form.Label>
-                      Arrival:
+                      datum dolaska:
                       <Form.Control
                         type="text"
                         value={currentReservation.datumDolaska}
@@ -156,7 +155,7 @@ export default function Master() {
                 <Row>
                   <Col>
                     <Form.Label>
-                      Departure:
+                      datum odlaska:
                       <Form.Control
                         type="text"
                         value={currentReservation.datumOdlaska}
@@ -174,6 +173,7 @@ export default function Master() {
 
       <Row className="mb-3">
         <Col>
+          <hr />
           {currentReservation && <Detail reservation={currentReservation} />}
         </Col>
       </Row>
