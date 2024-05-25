@@ -106,18 +106,6 @@ INSERT INTO Soba (tipSobe, cijena, dostupnost, brojSobe) VALUES
                                                              ('Apartman', 270.80, 1, 119);
 
 
--- Insert data into Gost table
-INSERT INTO Gost (ime, prezime, email) VALUES
-                                           ('Ime1', 'Prezime1', 'gost1@example.com'),
-                                           ('Ime2', 'Prezime2', 'gost2@example.com'),
-                                           ('Ime3', 'Prezime3', 'gost3@example.com'),
-                                           ('Ime4', 'Prezime4', 'gost4@example.com'),
-                                           ('Ime5', 'Prezime5', 'gost5@example.com'),
-                                           ('Ime6', 'Prezime6', 'gost6@example.com'),
-                                           ('Ime7', 'Prezime7', 'gost7@example.com'),
-                                           ('Ime8', 'Prezime8', 'gost8@example.com'),
-                                           ('Ime9', 'Prezime9', 'gost9@example.com'),
-                                           ('Ime10', 'Prezime10', 'gost10@example.com');
 
 
 -- Insert data into Zaposlenik table
