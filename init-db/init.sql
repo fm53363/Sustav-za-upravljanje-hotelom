@@ -105,6 +105,7 @@ INSERT INTO Soba (tipSobe, cijena, dostupnost, brojSobe) VALUES
                                                              ('Jednokrevetna', 129.40, 0, 118),
                                                              ('Apartman', 270.80, 1, 119);
 
+
 -- Insert data into Gost table
 INSERT INTO Gost (ime, prezime, email) VALUES
                                            ('Ime1', 'Prezime1', 'gost1@example.com'),
@@ -116,17 +117,8 @@ INSERT INTO Gost (ime, prezime, email) VALUES
                                            ('Ime7', 'Prezime7', 'gost7@example.com'),
                                            ('Ime8', 'Prezime8', 'gost8@example.com'),
                                            ('Ime9', 'Prezime9', 'gost9@example.com'),
-                                           ('Ime10', 'Prezime10', 'gost10@example.com'),
-                                           ('Ime11', 'Prezime11', 'gost11@example.com'),
-                                           ('Ime12', 'Prezime12', 'gost12@example.com'),
-                                           ('Ime13', 'Prezime13', 'gost13@example.com'),
-                                           ('Ime14', 'Prezime14', 'gost14@example.com'),
-                                           ('Ime15', 'Prezime15', 'gost15@example.com'),
-                                           ('Ime16', 'Prezime16', 'gost16@example.com'),
-                                           ('Ime17', 'Prezime17', 'gost17@example.com'),
-                                           ('Ime18', 'Prezime18', 'gost18@example.com'),
-                                           ('Ime19', 'Prezime19', 'gost19@example.com'),
-                                           ('Ime20', 'Prezime20', 'gost20@example.com');
+                                           ('Ime10', 'Prezime10', 'gost10@example.com');
+
 
 -- Insert data into Zaposlenik table
 INSERT INTO Zaposlenik (ime, prezime, email) VALUES
@@ -192,49 +184,59 @@ INSERT INTO UredivanjeSoba (idZaposlenik, idSoba) VALUES
 
 -- Insert data into Rezervacija table
 INSERT INTO Rezervacija (datumDolaska, datumOdlaska, idGost) VALUES
-                                                                 ('2024-04-21', '2024-05-01', 8),
-                                                                 ('2024-04-15', '2024-04-22', 15),
+                                                                 ('2024-04-21', '2024-05-01', 1),
+                                                                 ('2024-04-15', '2024-04-22', 2),
                                                                  ('2024-05-10', '2024-05-15', 3),
-                                                                 ('2024-05-14', '2024-05-18', 9),
+                                                                 ('2024-05-14', '2024-05-18', 4),
                                                                  ('2024-05-01', '2024-05-10', 5),
-                                                                 ('2024-04-28', '2024-05-05', 17),
-                                                                 ('2024-04-22', '2024-05-07', 2),
-                                                                 ('2024-04-25', '2024-05-01', 20),
-                                                                 ('2024-05-03', '2024-05-12', 6),
-                                                                 ('2024-05-06', '2024-05-15', 11),
-                                                                 ('2024-05-07', '2024-05-12', 19),
-                                                                 ('2024-05-08', '2024-05-11', 4),
-                                                                 ('2024-05-09', '2024-05-13', 13),
-                                                                 ('2024-05-04', '2024-05-08', 14),
-                                                                 ('2024-05-02', '2024-05-06', 1),
-                                                                 ('2024-05-05', '2024-05-07', 16),
+                                                                 ('2024-04-28', '2024-05-05', 6),
+                                                                 ('2024-04-22', '2024-05-07', 7),
+                                                                 ('2024-04-25', '2024-05-01', 8),
+                                                                 ('2024-05-03', '2024-05-12', 9),
+                                                                 ('2024-05-06', '2024-05-15', 10),
+                                                                 ('2024-05-07', '2024-05-12', 1),
+                                                                 ('2024-05-08', '2024-05-11', 2),
+                                                                 ('2024-05-09', '2024-05-13', 3),
+                                                                 ('2024-05-04', '2024-05-08', 4),
+                                                                 ('2024-05-02', '2024-05-06', 5),
+                                                                 ('2024-05-05', '2024-05-07', 6),
                                                                  ('2024-05-01', '2024-05-04', 7),
-                                                                 ('2024-05-11', '2024-05-14', 10),
-                                                                 ('2024-05-13', '2024-05-17', 18),
-                                                                 ('2024-04-28', '2024-05-05', 12);
+                                                                 ('2024-05-11', '2024-05-14', 8),
+                                                                 ('2024-05-13', '2024-05-17', 9),
+                                                                 ('2024-04-28', '2024-05-05', 10),
+                                                                 ('2024-05-14', '2024-05-20', 1),
+                                                                 ('2024-05-10', '2024-05-18', 2),
+                                                                 ('2024-05-12', '2024-05-17', 3),
+                                                                 ('2024-05-08', '2024-05-14', 4),
+                                                                 ('2024-05-06', '2024-05-12', 5);
 
 -- Insert data into Placanje table
 INSERT INTO Placanje (iznos, nacinPlacanja, sifraRezervacije, idGost) VALUES
-                                                                          (534.75, 'Kartica', 3, 10),
-                                                                          (289.50, 'Gotovina', 7, 4),
-                                                                          (123.60, 'Online', 11, 7),
-                                                                          (756.80, 'Kartica', 15, 12),
-                                                                          (499.99, 'Gotovina', 2, 15),
-                                                                          (200.50, 'Online', 6, 17),
-                                                                          (300.00, 'Kartica', 14, 13),
-                                                                          (400.75, 'Gotovina', 12, 14),
-                                                                          (600.25, 'Online', 1, 8),
-                                                                          (255.50, 'Kartica', 19, 1),
-                                                                          (145.80, 'Gotovina', 9, 3),
-                                                                          (678.90, 'Online', 4, 6),
-                                                                          (230.40, 'Kartica', 20, 11),
-                                                                          (150.70, 'Gotovina', 13, 5),
-                                                                          (460.85, 'Online', 8, 9),
-                                                                          (312.55, 'Kartica', 18, 16),
-                                                                          (274.90, 'Gotovina', 10, 19),
-                                                                          (367.45, 'Online', 5, 2),
-                                                                          (498.60, 'Kartica', 17, 18),
-                                                                          (456.90, 'Kartica', 15, 2);
+                                                                          (534.75, 'Kartica', 1, 1),
+                                                                          (289.50, 'Gotovina', 2, 2),
+                                                                          (123.60, 'Online', 3, 3),
+                                                                          (756.80, 'Kartica', 4, 4),
+                                                                          (499.99, 'Gotovina', 5, 5),
+                                                                          (200.50, 'Online', 6, 6),
+                                                                          (300.00, 'Kartica', 7, 7),
+                                                                          (400.75, 'Gotovina', 8, 8),
+                                                                          (600.25, 'Online', 9, 9),
+                                                                          (255.50, 'Kartica', 10, 10),
+                                                                          (145.80, 'Gotovina', 11, 1),
+                                                                          (678.90, 'Online', 12, 2),
+                                                                          (230.40, 'Kartica', 13, 3),
+                                                                          (150.70, 'Gotovina', 14, 4),
+                                                                          (460.85, 'Online', 15, 5),
+                                                                          (312.55, 'Kartica', 16, 6),
+                                                                          (274.90, 'Gotovina', 17, 7),
+                                                                          (367.45, 'Online', 18, 8),
+                                                                          (498.60, 'Kartica', 19, 9),
+                                                                          (456.90, 'Kartica', 20, 10),
+                                                                          (145.80, 'Gotovina', 21, 1),
+                                                                          (678.90, 'Online', 22, 2),
+                                                                          (230.40, 'Kartica', 23, 3),
+                                                                          (150.70, 'Gotovina', 24, 4),
+                                                                          (460.85, 'Online', 25, 5);
 
 -- Insert data into RezervacijaSoba table
 INSERT INTO RezervacijaSoba (sifraRezervacije, idSoba, checkIn, checkOut, brojGostiju, specijalniZahtjevi) VALUES
@@ -256,6 +258,11 @@ INSERT INTO RezervacijaSoba (sifraRezervacije, idSoba, checkIn, checkOut, brojGo
                                                                                                                (11, 9, '2024-05-07 10:53:40', '2024-05-12 10:53:40', 2, 'Extra bed'),
                                                                                                                (16, 4, '2024-05-02 10:53:40', '2024-05-06 10:53:40', 1, 'None'),
                                                                                                                (3, 5, '2024-04-28 10:53:40', '2024-05-05 10:53:40', 2, 'Vegetarian meal'),
-                                                                                                               (20, 18, '2024-05-08 10:53:40', '2024-05-13 10:53:40', 2, 'Late check-out'),
-                                                                                                               (17, 6, '2024-05-01 10:53:40', '2024-05-07 10:53:40', 1, 'None');
+                                                                                                               (20, 18, '2024-05-03 10:53:40', '2024-05-06 10:53:40', 4, 'None'),
+                                                                                                               (18, 16, '2024-05-13 10:53:40', '2024-05-17 10:53:40', 1, 'None'),
+                                                                                                               (17, 13, '2024-05-01 10:53:40', '2024-05-04 10:53:40', 2, 'Extra bed'),
+                                                                                                               (25, 2, '2024-04-15 10:53:40', '2024-04-22 10:53:40', 3, 'Vegetarian meal'),
+                                                                                                               (24, 14, '2024-05-06 10:53:40', '2024-05-12 10:53:40', 1, 'None');
+
+
 
