@@ -18,11 +18,9 @@ import java.math.BigDecimal;
 public class RezervacijaSoba {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sifraRezervacije;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSoba;
 
     private BigDecimal cijenaNoci;
