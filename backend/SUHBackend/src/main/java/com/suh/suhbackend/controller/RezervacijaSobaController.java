@@ -33,4 +33,14 @@ public class RezervacijaSobaController {
         rezervacijaSobaService.deleteRezervacijaSoba(new RezervacijaSobaId(sifraRezervacije, idSoba));
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/{sifraRezervacije}/{idSoba}")
+    public ResponseEntity<RezervacijaSoba> updateRezervacijaSoba(@PathVariable Integer sifraRezervacije, @PathVariable Integer idSoba, @RequestBody RezervacijaSoba rezervacija) {
+        return ResponseEntity.ok(rezervacijaSobaService.updateRezervacijaSoba(new RezervacijaSobaId(sifraRezervacije, idSoba), rezervacija));
+    }
+
+    @PostMapping
+    public ResponseEntity<RezervacijaSoba> createRezervacijaSoba(@RequestBody RezervacijaSoba rezervacija) {
+        return ResponseEntity.ok(rezervacijaSobaService.createRezervacijaSoba(rezervacija));
+    }
 }

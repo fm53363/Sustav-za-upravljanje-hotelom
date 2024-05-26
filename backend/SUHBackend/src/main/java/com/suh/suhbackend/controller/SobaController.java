@@ -21,12 +21,12 @@ public class SobaController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Soba>> getAllSoba() {
-        return new ResponseEntity<List<Soba>>(sobaService.listaSoba(), HttpStatus.OK);
+        return new ResponseEntity<>(sobaService.listaSoba(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Soba>> getSobaById(@PathVariable int id) {
-        return new ResponseEntity<Optional<Soba>>(sobaService.getSoba(id), HttpStatus.OK);
+        return new ResponseEntity<>(sobaService.getSoba(id), HttpStatus.OK);
     }
 
 

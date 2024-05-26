@@ -70,6 +70,9 @@ public class RezervacijaService {
         return rezervacijaRepository.save(rezervacija);
     }
 
+    public Rezervacija createRezervacija(Rezervacija rezervacija) {
+        return rezervacijaRepository.save(rezervacija);
+    }
 
     public List<Rezervacija> getRezervacijaByGostId(int gostId) {
         return rezervacijaRepository.findByIdGost(gostId);

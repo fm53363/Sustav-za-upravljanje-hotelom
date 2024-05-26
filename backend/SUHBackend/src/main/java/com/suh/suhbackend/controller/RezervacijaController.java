@@ -2,7 +2,9 @@ package com.suh.suhbackend.controller;
 
 import com.suh.suhbackend.entitiy.Rezervacija;
 
+import com.suh.suhbackend.entitiy.Soba;
 import com.suh.suhbackend.service.RezervacijaService;
+import com.suh.suhbackend.service.SobaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ public class RezervacijaController {
 
     @Autowired
     private RezervacijaService rezervacijaService;
+
+    @Autowired
+    private SobaService sobaService;
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Rezervacija>> getAllRezervacija() {
@@ -40,5 +45,19 @@ public class RezervacijaController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Rezervacija> updateRezervacija(@PathVariable int id, @RequestBody Rezervacija rezervacija) {
+        return ResponseEntity.ok(rezervacijaService.updateRezervacija(id, rezervacija));
+    }
+
+    @PostMapping
+    public ResponseEntity<Rezervacija> createGost(@RequestBody Rezervacija rezervacija) {
+        return ResponseEntity.ok(rezervacijaService.createRezervacija(rezervacija));
+    }
+
+    @GetMapping("/sobe/{id}")
+    public ResponseEntity<List<Soba>> getAllRezervacija(@PathVariable int idRezervacija) {
+        return new ResponseEntity<>(sobaService.dostupneSobe(idRezervacija), HttpStatus.OK);
+    }
 }
 
