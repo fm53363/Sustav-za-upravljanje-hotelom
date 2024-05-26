@@ -17,6 +17,13 @@ export default function Master() {
   const [guestReservations, setGuestReservations] = useState([]);
   const [currentReservationIndex, setCurrentReservationIndex] = useState(0);
 
+  const [editedReservation, setEditedReservation] = useState({
+    sifraRezervacije: "",
+    datumDolaska: "",
+    datumOdlaska: "",
+    idGost: "",
+  });
+
   const handleGuestChange = (event) => {
     setSelectedGuest(event.target.value);
   };
@@ -31,6 +38,54 @@ export default function Master() {
     setCurrentReservationIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : prevIndex
     );
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setEditedReservation((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveReservation = async () => {
+    try {
+      const response = await axios.put(
+        `/api/rezervacija/${editedReservation.sifraRezervacije}`,
+        editedReservation
+      );
+      const updatedReservation = response.data;
+      setReservations((prevReservations) =>
+        prevReservations.map((reservation) =>
+          reservation.sifraRezervacije === updatedReservation.sifraRezervacije
+            ? updatedReservation
+            : reservation
+        )
+      );
+      alert("Rezervacija uspješno spremljena.");
+    } catch (error) {
+      console.error("Error saving reservation:", error);
+      alert("Greška prilikom spremanja rezervacije.");
+    }
+  };
+
+  const handleDeleteReservation = async () => {
+    try {
+      await axios.delete(
+        `/api/rezervacija/${editedReservation.sifraRezervacije}`
+      );
+      setReservations((prevReservations) =>
+        prevReservations.filter(
+          (reservation) =>
+            reservation.sifraRezervacije !== editedReservation.sifraRezervacije
+        )
+      );
+      setCurrentReservationIndex(0); // Optionally, reset the index
+      alert("Rezervacija uspješno obrisana.");
+    } catch (error) {
+      console.error("Error deleting reservation:", error);
+      alert("Greška prilikom brisanja rezervacije.");
+    }
   };
 
   useEffect(() => {
@@ -80,6 +135,12 @@ export default function Master() {
     }
   }, [selectedGuest, reservations]);
 
+  useEffect(() => {
+    if (guestReservations.length > 0) {
+      setEditedReservation(guestReservations[currentReservationIndex]);
+    }
+  }, [currentReservationIndex, guestReservations]);
+
   const currentReservation = guestReservations[currentReservationIndex];
 
   return (
@@ -120,10 +181,10 @@ export default function Master() {
                         variant="primary"
                         onClick={handlePreviousReservation}
                       >
-                        Sljedeća
+                        Prethodna
                       </Button>{" "}
                       <Button variant="primary" onClick={handleNextReservation}>
-                        Prethodna
+                        Sljedeća
                       </Button>
                     </ButtonGroup>
                   </Col>
@@ -131,10 +192,11 @@ export default function Master() {
                 <Row>
                   <Col>
                     <Form.Label>
-                      sifra Rezervacije:
+                      Sifra Rezervacije:
                       <Form.Control
                         type="text"
-                        value={currentReservation.sifraRezervacije}
+                        name="sifraRezervacije"
+                        value={editedReservation.sifraRezervacije}
                         disabled
                       />
                     </Form.Label>
@@ -143,11 +205,12 @@ export default function Master() {
                 <Row>
                   <Col>
                     <Form.Label>
-                      datum dolaska:
+                      Datum Dolaska:
                       <Form.Control
                         type="text"
-                        value={currentReservation.datumDolaska}
-                        disabled
+                        name="datumDolaska"
+                        value={editedReservation.datumDolaska}
+                        onChange={handleInputChange}
                       />
                     </Form.Label>
                   </Col>
@@ -155,13 +218,24 @@ export default function Master() {
                 <Row>
                   <Col>
                     <Form.Label>
-                      datum odlaska:
+                      Datum Odlaska:
                       <Form.Control
                         type="text"
-                        value={currentReservation.datumOdlaska}
-                        disabled
+                        name="datumOdlaska"
+                        value={editedReservation.datumOdlaska}
+                        onChange={handleInputChange}
                       />
                     </Form.Label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Button variant="success" onClick={handleSaveReservation}>
+                      Spremi
+                    </Button>
+                    <Button variant="danger" onClick={handleDeleteReservation}>
+                      Obriši
+                    </Button>
                   </Col>
                 </Row>
               </div>

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 
 export default function Detail({ reservation }) {
   const [reservationRooms, setReservationRooms] = useState(null);
+  const [alert, setAlert] = useState({ show: false, variant: "", message: "" });
+  const [modifiedRooms, setModifiedRooms] = useState([]);
 
   useEffect(() => {
     const fetchReservationRooms = async () => {
       try {
         const response = await axios.get("/api/rezervacijasoba/getAll");
         const filteredRooms = response.data.filter(
-          (room) => room.sifraRezervacije == reservation.sifraRezervacije
+          (room) => room.sifraRezervacije === reservation.sifraRezervacije
         );
         setReservationRooms(filteredRooms);
       } catch (err) {
@@ -22,26 +24,66 @@ export default function Detail({ reservation }) {
   }, [reservation]);
 
   const handleUpdate = (roomId) => {
-    // Handle update logic here
-    console.log("Update room with ID:", roomId);
+    const updatedRooms = reservationRooms.map((room) =>
+      room.idSoba === roomId
+        ? modifiedRooms.find((r) => r.idSoba === roomId) || room
+        : room
+    );
+    setReservationRooms(updatedRooms);
+    setAlert({
+      show: true,
+      variant: "success",
+      message: "Promjene su spremljene lokalno.",
+    });
   };
 
-  const handleDelete = (roomId) => {
-    // Handle delete logic here
-    console.log("Delete room with ID:", roomId);
+  const handleDelete = async (roomId) => {
+    try {
+      await axios.delete(
+        `/api/rezervacijasoba/${reservation.sifraRezervacije}/${roomId}`
+      );
+      setReservationRooms((prevRooms) =>
+        prevRooms.filter((room) => room.idSoba !== roomId)
+      );
+      setAlert({
+        show: true,
+        variant: "success",
+        message: "Soba je uspješno izbrisana",
+      });
+    } catch (err) {
+      setAlert({
+        show: true,
+        variant: "danger",
+        message: "Pogreška prilikom brisanja sobe",
+      });
+      console.error("Error deleting room:", err);
+    }
   };
 
   const handleInputChange = (e, roomId, fieldName) => {
     const { value } = e.target;
-    // Here, you can handle updating the state or performing any other logic based on the changes
-    console.log(
-      `Change detected in ${fieldName} for room ${roomId}. New value: ${value}`
+    const updatedRoom = { idSoba: roomId, [fieldName]: value };
+    setModifiedRooms((prevModifiedRooms) =>
+      prevModifiedRooms.some((room) => room.idSoba === roomId)
+        ? prevModifiedRooms.map((room) =>
+            room.idSoba === roomId ? updatedRoom : room
+          )
+        : [...prevModifiedRooms, updatedRoom]
     );
   };
 
   return (
     <Container>
       <h1>Detalji rezervacije</h1>
+      {alert.show && (
+        <Alert
+          variant={alert.variant}
+          onClose={() => setAlert({ ...alert, show: false })}
+          dismissible
+        >
+          {alert.message}
+        </Alert>
+      )}
       {reservationRooms ? (
         reservationRooms.map((room) => (
           <div key={room.idSoba}>
@@ -50,7 +92,7 @@ export default function Detail({ reservation }) {
                 <Col>
                   <Form.Group controlId={`formRoomId_${room.idSoba}`}>
                     <Form.Label>id sobe</Form.Label> {/* Room ID */}
-                    <Form.Control type="text" readOnly value={room.idSoba} />
+                    <Form.Control type="text" disabled value={room.idSoba} />
                   </Form.Group>
                 </Col>
                 <Col>
@@ -59,33 +101,23 @@ export default function Detail({ reservation }) {
                     {/* Reservation ID */}
                     <Form.Control
                       type="text"
-                      readOnly
+                      disabled
                       value={room.sifraRezervacije}
                     />
                   </Form.Group>
                 </Col>
                 <Col>
-                  <Form.Group controlId={`formCheckIn_${room.idSoba}`}>
-                    <Form.Label>Dolazak</Form.Label> {/* Check-In */}
+                  <Form.Group controlId={`formPrice_${room.idSoba}`}>
+                    <Form.Label>Cijena po noći</Form.Label>{" "}
+                    {/* Price per night */}
                     <Form.Control
                       type="text"
-                      readOnly={false} // Make it editable
-                      value={new Date(room.checkIn).toLocaleString()}
-                      onChange={(e) =>
-                        handleInputChange(e, room.idSoba, "checkIn")
+                      value={
+                        modifiedRooms.find((r) => r.idSoba === room.idSoba)
+                          ?.cijenaNoci || room.cijenaNoci
                       }
-                    />
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group controlId={`formCheckOut_${room.idSoba}`}>
-                    <Form.Label>Odlazak</Form.Label> {/* Check-Out */}
-                    <Form.Control
-                      type="text"
-                      readOnly={false} // Make it editable
-                      value={new Date(room.checkOut).toLocaleString()}
                       onChange={(e) =>
-                        handleInputChange(e, room.idSoba, "checkOut")
+                        handleInputChange(e, room.idSoba, "cijenaNoci")
                       }
                     />
                   </Form.Group>
@@ -96,8 +128,10 @@ export default function Detail({ reservation }) {
                     {/* Number of Guests */}
                     <Form.Control
                       type="text"
-                      readOnly={false} // Make it editable
-                      value={room.brojGostiju}
+                      value={
+                        modifiedRooms.find((r) => r.idSoba === room.idSoba)
+                          ?.brojGostiju || room.brojGostiju
+                      }
                       onChange={(e) =>
                         handleInputChange(e, room.idSoba, "brojGostiju")
                       }
@@ -110,8 +144,10 @@ export default function Detail({ reservation }) {
                     {/* Special Requests */}
                     <Form.Control
                       type="text"
-                      readOnly={false} // Make it editable
-                      value={room.specijalniZahtjevi}
+                      value={
+                        modifiedRooms.find((r) => r.idSoba === room.idSoba)
+                          ?.specijalniZahtjevi || room.specijalniZahtjevi
+                      }
                       onChange={(e) =>
                         handleInputChange(e, room.idSoba, "specijalniZahtjevi")
                       }
@@ -123,7 +159,7 @@ export default function Detail({ reservation }) {
                     variant="warning" // Change variant to 'warning' for yellow color
                     onClick={() => handleUpdate(room.idSoba)}
                   >
-                    Uredi {/* Change text to 'Uredi' */}
+                    Spremi {/* Change text to 'Spremi' */}
                   </Button>{" "}
                   <Button
                     variant="danger"
