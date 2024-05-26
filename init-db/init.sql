@@ -80,7 +80,6 @@ CREATE TABLE RezervacijaSoba
     FOREIGN KEY (idSoba) REFERENCES Soba(idSoba) ON DELETE CASCADE
 );
 
-
 -- Insert data into Soba table
 INSERT INTO Soba (tipSobe, cijena, dostupnost, brojSobe) VALUES
                                                              ('Apartman', 251.75, 1, 100),
@@ -104,31 +103,28 @@ INSERT INTO Soba (tipSobe, cijena, dostupnost, brojSobe) VALUES
                                                              ('Jednokrevetna', 129.40, 0, 118),
                                                              ('Apartman', 270.80, 1, 119);
 
-
-
-
 -- Insert data into Zaposlenik table
 INSERT INTO Zaposlenik (ime, prezime, email) VALUES
-                                                 ('ZIme1', 'ZPrezime1', 'zaposlenik1@example.com'),
-                                                 ('ZIme2', 'ZPrezime2', 'zaposlenik2@example.com'),
-                                                 ('ZIme3', 'ZPrezime3', 'zaposlenik3@example.com'),
-                                                 ('ZIme4', 'ZPrezime4', 'zaposlenik4@example.com'),
-                                                 ('ZIme5', 'ZPrezime5', 'zaposlenik5@example.com'),
-                                                 ('ZIme6', 'ZPrezime6', 'zaposlenik6@example.com'),
-                                                 ('ZIme7', 'ZPrezime7', 'zaposlenik7@example.com'),
-                                                 ('ZIme8', 'ZPrezime8', 'zaposlenik8@example.com'),
-                                                 ('ZIme9', 'ZPrezime9', 'zaposlenik9@example.com'),
-                                                 ('ZIme10', 'ZPrezime10', 'zaposlenik10@example.com'),
-                                                 ('ZIme11', 'ZPrezime11', 'zaposlenik11@example.com'),
-                                                 ('ZIme12', 'ZPrezime12', 'zaposlenik12@example.com'),
-                                                 ('ZIme13', 'ZPrezime13', 'zaposlenik13@example.com'),
-                                                 ('ZIme14', 'ZPrezime14', 'zaposlenik14@example.com'),
-                                                 ('ZIme15', 'ZPrezime15', 'zaposlenik15@example.com'),
-                                                 ('ZIme16', 'ZPrezime16', 'zaposlenik16@example.com'),
-                                                 ('ZIme17', 'ZPrezime17', 'zaposlenik17@example.com'),
-                                                 ('ZIme18', 'ZPrezime18', 'zaposlenik18@example.com'),
-                                                 ('ZIme19', 'ZPrezime19', 'zaposlenik19@example.com'),
-                                                 ('ZIme20', 'ZPrezime20', 'zaposlenik20@example.com');
+                                                 ('Ivan', 'Horvat', 'ivan.horvat@example.com'),
+                                                 ('Ana', 'Kovačić', 'ana.kovacic@example.com'),
+                                                 ('Marko', 'Marin', 'marko.marin@example.com'),
+                                                 ('Petra', 'Novak', 'petra.novak@example.com'),
+                                                 ('Luka', 'Barić', 'luka.baric@example.com'),
+                                                 ('Sara', 'Ramić', 'sara.ramic@example.com'),
+                                                 ('Matej', 'Filipović', 'matej.filipovic@example.com'),
+                                                 ('Ivana', 'Perić', 'ivana.peric@example.com'),
+                                                 ('Josip', 'Tomić', 'josip.tomic@example.com'),
+                                                 ('Marija', 'Jurić', 'marija.juric@example.com'),
+                                                 ('Nikola', 'Kralj', 'nikola.kralj@example.com'),
+                                                 ('Martina', 'Blažević', 'martina.blazevic@example.com'),
+                                                 ('Tomislav', 'Lovrić', 'tomislav.lovric@example.com'),
+                                                 ('Maja', 'Vuković', 'maja.vukovic@example.com'),
+                                                 ('Antun', 'Petrović', 'antun.petrovic@example.com'),
+                                                 ('Lucija', 'Pavić', 'lucija.pavic@example.com'),
+                                                 ('Hrvoje', 'Grgić', 'hrvoje.grgic@example.com'),
+                                                 ('Dora', 'Šimić', 'dora.simic@example.com'),
+                                                 ('Karlo', 'Stanić', 'karlo.stanic@example.com'),
+                                                 ('Ivana', 'Milić', 'ivana.milic@example.com');
 
 -- Insert data into Menadzer table
 INSERT INTO Menadzer (brojPodređenih, idZaposlenik) VALUES
@@ -171,23 +167,23 @@ INSERT INTO UredivanjeSoba (idZaposlenik, idSoba) VALUES
 
 -- Insert data into Gost table
 INSERT INTO Gost (ime, prezime, email) VALUES
-                                           ('Ime1', 'Prezime1', 'gost1@example.com'),
-                                           ('Ime2', 'Prezime2', 'gost2@example.com'),
-                                           ('Ime3', 'Prezime3', 'gost3@example.com'),
-                                           ('Ime4', 'Prezime4', 'gost4@example.com');
+                                           ('Marija', 'Petrović', 'marija.petrović@example.com'),
+                                           ('Ivana', 'Knežević', 'ivana.knezevic@example.com'),
+                                           ('Ante', 'Matić', 'ante.matic@example.com'),
+                                           ('Lucija', 'Jurić', 'lucija.juric@example.com');
 
 -- Insert data into Rezervacija table
 INSERT INTO Rezervacija (datumDolaska, datumOdlaska, idGost) VALUES
-                                                                 ('2024-04-21', '2024-05-01', 1),
-                                                                 ('2024-05-07', '2024-05-12', 1),
-                                                                 ('2024-05-14', '2024-05-20', 1),
-                                                                 ('2024-04-15', '2024-04-22', 2),
-                                                                 ('2024-05-08', '2024-05-14', 2),
-                                                                 ('2024-05-10', '2024-05-15', 3),
-                                                                 ('2024-05-09', '2024-05-13', 3),
-                                                                 ('2024-05-12', '2024-05-17', 3),
-                                                                 ('2024-05-14', '2024-05-18', 4),
-                                                                 ('2024-05-04', '2024-05-08', 4);
+                                                                 ('2024-07-21', '2024-07-25', 1),
+                                                                 ('2024-08-07', '2024-08-12', 1),
+                                                                 ('2024-09-14', '2024-09-20', 1),
+                                                                 ('2024-06-15', '2024-06-22', 2),
+                                                                 ('2024-07-08', '2024-07-14', 2),
+                                                                 ('2024-08-10', '2024-08-15', 3),
+                                                                 ('2024-09-09', '2024-09-13', 3),
+                                                                 ('2024-10-12', '2024-10-17', 3),
+                                                                 ('2024-11-14', '2024-11-18', 4),
+                                                                 ('2024-12-04', '2024-12-08', 4);
 
 -- Insert data into Placanje table
 INSERT INTO Placanje (iznos, nacinPlacanja, sifraRezervacije, idGost) VALUES
@@ -203,23 +199,22 @@ INSERT INTO Placanje (iznos, nacinPlacanja, sifraRezervacije, idGost) VALUES
                                                                           (150.70, 'Gotovina', 10, 4);
 
 -- Insert data into RezervacijaSoba table
--- Insert data into RezervacijaSoba table
 INSERT INTO RezervacijaSoba (sifraRezervacije, idSoba, cijenaNoci, brojGostiju, specijalniZahtjevi) VALUES
-                                                                                                               (1, 11, 100.0, 1, 'None'), -- Reservation 1
-                                                                                                               (2, 2, 100.0, 2, 'Vegetarian meal'), -- Reservation 2
-                                                                                                               (3, 5, 100.0, 2, 'Vegetarian meal'), -- Reservation 3
-                                                                                                               (4, 8, 100.0, 2, 'Late check-out'), -- Reservation 4
-                                                                                                               (5, 17, 100.0, 2, 'Extra bed'), -- Reservation 5
-                                                                                                               (5, 18, 100.0, 2, 'None'), -- Reservation 5
-                                                                                                               (6, 15, 100.0, 4, 'Late check-out'), -- Reservation 6
-                                                                                                               (6, 16, 100.0, 4, 'None'), -- Reservation 6
-                                                                                                               (7, 5, 100.0, 3, 'Extra bed'), -- Reservation 7
-                                                                                                               (7, 20, 100.0, 2, 'Extra bed'), -- Reservation 7
-                                                                                                               (8, 6, 100.0, 1, 'None'), -- Reservation 8
-                                                                                                               (8, 10, 100.0, 1, 'None'), -- Reservation 8
-                                                                                                               (9, 3, 100.0, 1, 'None'), -- Reservation 9
-                                                                                                               (9, 4, 100.0, 1, 'None'), -- Reservation 9
-                                                                                                               (9, 5, 100.0, 1, 'None'), -- Reservation 9
-                                                                                                               (10, 14, 100.0, 2, 'Extra bed'), -- Reservation 10
-                                                                                                               (10, 16, 100.0, 2, 'Late check-out'), -- Reservation 10
-                                                                                                               (10, 18, 100.0, 2, 'None'); -- Reservation 10
+                                                                                                        (1, 11, 100.0, 1, 'None'),
+                                                                                                        (2, 2, 100.0, 2, 'Vegetarian meal'),
+                                                                                                        (3, 5, 100.0, 2, 'Vegetarian meal'),
+                                                                                                        (4, 8, 100.0, 2, 'Late check-out'),
+                                                                                                        (5, 17, 100.0, 2, 'Extra bed'),
+                                                                                                        (5, 18, 100.0, 2, 'None'),
+                                                                                                        (6, 15, 100.0, 4, 'Late check-out'),
+                                                                                                        (6, 16, 100.0, 4, 'None'),
+                                                                                                        (7, 5, 100.0, 3, 'Extra bed'),
+                                                                                                        (7, 20, 100.0, 2, 'Extra bed'),
+                                                                                                        (8, 6, 100.0, 1, 'None'),
+                                                                                                        (8, 10, 100.0, 1, 'None'),
+                                                                                                        (9, 3, 100.0, 1, 'None'),
+                                                                                                        (9, 4, 100.0, 1, 'None'),
+                                                                                                        (9, 5, 100.0, 1, 'None'),
+                                                                                                        (10, 14, 100.0, 2, 'Extra bed'),
+                                                                                                        (10, 16, 100.0, 2, 'Late check-out'),
+                                                                                                        (10, 18, 100.0, 2, 'None');
