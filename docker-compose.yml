@@ -24,13 +24,3 @@ services:
       SPRING_DATASOURCE_PASSWORD: test
     ports:
       - "8080:8080"
-
-#  frontend:
-#    build:
-#      context: ./frontend/SUHfrontend
-#      dockerfile: Dockerfile
-#    container_name: frontend
-#    ports:
-#      - "3000:80"
-#    depends_on:
-#      - springapp
