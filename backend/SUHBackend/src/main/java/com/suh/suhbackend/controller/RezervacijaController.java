@@ -24,16 +24,21 @@ public class RezervacijaController {
         return new ResponseEntity<>(rezervacijaService.listaRezervacija(), HttpStatus.OK);
     }
 
+    @GetMapping("/gost/{gostId}")
+    public ResponseEntity<List<Rezervacija>> getRezervacijaByGostId(@PathVariable int gostId) {
+        return new ResponseEntity<>(rezervacijaService.getRezervacijaByGostId(gostId), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Rezervacija>> getRezervacijaById(@PathVariable int id) {
         return new ResponseEntity<>(rezervacijaService.getRezervacija(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Rezervacija> createRezervacija(@RequestBody Rezervacija rezervacija) {
-        return ResponseEntity.ok(rezervacijaService.createRezervacija(rezervacija));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRezervacijaById(@PathVariable int id) {
+        rezervacijaService.deleteRezervacija(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 }
 

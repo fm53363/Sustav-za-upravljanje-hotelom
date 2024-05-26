@@ -4,10 +4,9 @@ import com.suh.suhbackend.entitiy.RezervacijaSoba;
 import com.suh.suhbackend.service.RezervacijaSobaService;
 import com.suh.suhbackend.utils.RezervacijaSobaId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,5 +26,11 @@ public class RezervacijaSobaController {
     @GetMapping("/{sifraRezervacije}/{idSoba}")
     public Optional<RezervacijaSoba> getRezervacijaSobaById(@PathVariable Integer sifraRezervacije, @PathVariable Integer idSoba) {
         return rezervacijaSobaService.findById(new RezervacijaSobaId(sifraRezervacije, idSoba));
+    }
+
+    @DeleteMapping("/{sifraRezervacije}/{idSoba}")
+    public ResponseEntity<String> deleteRezervacijaSoba(@PathVariable Integer sifraRezervacije, @PathVariable Integer idSoba) {
+        rezervacijaSobaService.deleteRezervacijaSoba(new RezervacijaSobaId(sifraRezervacije, idSoba));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

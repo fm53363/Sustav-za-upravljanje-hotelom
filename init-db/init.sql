@@ -72,8 +72,7 @@ CREATE TABLE RezervacijaSoba
 (
     sifraRezervacije INT NOT NULL,
     idSoba INT NOT NULL,
-    checkIn TIMESTAMP,
-    checkOut TIMESTAMP,
+    cijenaNoci NUMERIC(10, 2),
     brojGostiju INT,
     specijalniZahtjevi TEXT,
     PRIMARY KEY (sifraRezervacije, idSoba),
@@ -205,22 +204,22 @@ INSERT INTO Placanje (iznos, nacinPlacanja, sifraRezervacije, idGost) VALUES
 
 -- Insert data into RezervacijaSoba table
 -- Insert data into RezervacijaSoba table
-INSERT INTO RezervacijaSoba (sifraRezervacije, idSoba, checkIn, checkOut, brojGostiju, specijalniZahtjevi) VALUES
-                                                                                                               (1, 11, '2024-05-11 10:53:40', '2024-05-14 10:53:40', 1, 'None'), -- Reservation 1
-                                                                                                               (2, 2, '2024-05-05 10:53:40', '2024-05-20 10:53:40', 2, 'Vegetarian meal'), -- Reservation 2
-                                                                                                               (3, 5, '2024-04-28 10:53:40', '2024-05-05 10:53:40', 2, 'Vegetarian meal'), -- Reservation 3
-                                                                                                               (4, 8, '2024-05-14 10:53:40', '2024-05-18 10:53:40', 2, 'Late check-out'), -- Reservation 4
-                                                                                                               (5, 17, '2024-05-05 10:53:40', '2024-05-07 10:53:40', 2, 'Extra bed'), -- Reservation 5
-                                                                                                               (5, 18, '2024-05-05 10:53:40', '2024-05-07 10:53:40', 2, 'None'), -- Reservation 5
-                                                                                                               (6, 15, '2024-05-09 10:53:40', '2024-05-11 10:53:40', 4, 'Late check-out'), -- Reservation 6
-                                                                                                               (6, 16, '2024-05-09 10:53:40', '2024-05-11 10:53:40', 4, 'None'), -- Reservation 6
-                                                                                                               (7, 5, '2024-04-22 10:53:40', '2024-05-07 10:53:40', 3, 'Extra bed'), -- Reservation 7
-                                                                                                               (7, 20, '2024-04-23 10:53:40', '2024-05-05 10:53:40', 2, 'Extra bed'), -- Reservation 7
-                                                                                                               (8, 6, '2024-05-01 10:53:40', '2024-05-08 10:53:40', 1, 'None'), -- Reservation 8
-                                                                                                               (8, 10, '2024-05-01 10:53:40', '2024-05-08 10:53:40', 1, 'None'), -- Reservation 8
-                                                                                                               (9, 3, '2024-05-06 10:53:40', '2024-05-10 10:53:40', 1, 'None'), -- Reservation 9
-                                                                                                               (9, 4, '2024-05-06 10:53:40', '2024-05-10 10:53:40', 1, 'None'), -- Reservation 9
-                                                                                                               (9, 5, '2024-05-06 10:53:40', '2024-05-10 10:53:40', 1, 'None'), -- Reservation 9
-                                                                                                               (10, 14, '2024-05-04 10:53:40', '2024-05-12 10:53:40', 2, 'Extra bed'), -- Reservation 10
-                                                                                                               (10, 16, '2024-05-04 10:53:40', '2024-05-12 10:53:40', 2, 'Late check-out'), -- Reservation 10
-                                                                                                               (10, 18, '2024-05-04 10:53:40', '2024-05-12 10:53:40', 2, 'None'); -- Reservation 10
+INSERT INTO RezervacijaSoba (sifraRezervacije, idSoba, cijenaNoci, brojGostiju, specijalniZahtjevi) VALUES
+                                                                                                               (1, 11, 100.0, 1, 'None'), -- Reservation 1
+                                                                                                               (2, 2, 100.0, 2, 'Vegetarian meal'), -- Reservation 2
+                                                                                                               (3, 5, 100.0, 2, 'Vegetarian meal'), -- Reservation 3
+                                                                                                               (4, 8, 100.0, 2, 'Late check-out'), -- Reservation 4
+                                                                                                               (5, 17, 100.0, 2, 'Extra bed'), -- Reservation 5
+                                                                                                               (5, 18, 100.0, 2, 'None'), -- Reservation 5
+                                                                                                               (6, 15, 100.0, 4, 'Late check-out'), -- Reservation 6
+                                                                                                               (6, 16, 100.0, 4, 'None'), -- Reservation 6
+                                                                                                               (7, 5, 100.0, 3, 'Extra bed'), -- Reservation 7
+                                                                                                               (7, 20, 100.0, 2, 'Extra bed'), -- Reservation 7
+                                                                                                               (8, 6, 100.0, 1, 'None'), -- Reservation 8
+                                                                                                               (8, 10, 100.0, 1, 'None'), -- Reservation 8
+                                                                                                               (9, 3, 100.0, 1, 'None'), -- Reservation 9
+                                                                                                               (9, 4, 100.0, 1, 'None'), -- Reservation 9
+                                                                                                               (9, 5, 100.0, 1, 'None'), -- Reservation 9
+                                                                                                               (10, 14, 100.0, 2, 'Extra bed'), -- Reservation 10
+                                                                                                               (10, 16, 100.0, 2, 'Late check-out'), -- Reservation 10
+                                                                                                               (10, 18, 100.0, 2, 'None'); -- Reservation 10

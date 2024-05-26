@@ -22,4 +22,10 @@ public class RezervacijaSobaService {
     public Optional<RezervacijaSoba> findById(RezervacijaSobaId rezervacijaSobaId) {
         return repo.findById(rezervacijaSobaId);
     }
+
+    public void deleteRezervacijaSoba(RezervacijaSobaId rezervacijaSobaId) {
+        repo.deleteById(rezervacijaSobaId);
+    }
+
+
 }

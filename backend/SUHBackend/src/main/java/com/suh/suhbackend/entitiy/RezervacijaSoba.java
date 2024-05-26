@@ -4,7 +4,8 @@ import com.suh.suhbackend.utils.RezervacijaSobaId;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+
 
 @Data
 @NoArgsConstructor
@@ -24,8 +25,7 @@ public class RezervacijaSoba {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSoba;
 
-    private Timestamp checkIn;
-    private Timestamp checkOut;
+    private BigDecimal cijenaNoci;
     private Integer brojGostiju;
     private String specijalniZahtjevi;
 }

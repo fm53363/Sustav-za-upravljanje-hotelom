@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface RezervacijaRepository extends JpaRepository<Rezervacija,Integer> {
 
+    List<Rezervacija> findByIdGost(int idGost);
+
     @Query("SELECT r FROM Rezervacija r WHERE r.idGost = :idGost AND r.datumOdlaska >= :currentDate")
     List<Rezervacija> findFutureReservationsByIdGost(@Param("idGost") int idGost, @Param("currentDate") LocalDate currentDate);
 }
