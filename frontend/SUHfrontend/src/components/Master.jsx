@@ -24,6 +24,11 @@ export default function Master() {
     idGost: "",
   });
 
+  const [errors, setErrors] = useState({
+    datumDolaska: "",
+    datumOdlaska: "",
+  });
+
   const handleGuestChange = (event) => {
     setSelectedGuest(event.target.value);
   };
@@ -40,15 +45,38 @@ export default function Master() {
     );
   };
 
+  const validateDate = (date) => {
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    return datePattern.test(date);
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditedReservation((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    if (!validateDate(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "Datum mora biti u formatu YYYY-MM-DD",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
   };
 
   const handleSaveReservation = async () => {
+    const { datumDolaska, datumOdlaska } = editedReservation;
+    if (!validateDate(datumDolaska) || !validateDate(datumOdlaska)) {
+      alert("Datum mora biti u formatu YYYY-MM-DD");
+      return;
+    }
+
     try {
       const response = await axios.put(
         `/api/rezervacija/${editedReservation.sifraRezervacije}`,
@@ -192,13 +220,8 @@ export default function Master() {
                 <Row>
                   <Col>
                     <Form.Label>
-                      Sifra Rezervacije:
-                      <Form.Control
-                        type="text"
-                        name="sifraRezervacije"
-                        value={editedReservation.sifraRezervacije}
-                        disabled
-                      />
+                      Rezervacija {currentReservationIndex + 1} od{" "}
+                      {guestReservations.length}
                     </Form.Label>
                   </Col>
                 </Row>
@@ -211,7 +234,11 @@ export default function Master() {
                         name="datumDolaska"
                         value={editedReservation.datumDolaska}
                         onChange={handleInputChange}
+                        isInvalid={!!errors.datumDolaska}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.datumDolaska}
+                      </Form.Control.Feedback>
                     </Form.Label>
                   </Col>
                 </Row>
@@ -224,7 +251,11 @@ export default function Master() {
                         name="datumOdlaska"
                         value={editedReservation.datumOdlaska}
                         onChange={handleInputChange}
+                        isInvalid={!!errors.datumOdlaska}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.datumOdlaska}
+                      </Form.Control.Feedback>
                     </Form.Label>
                   </Col>
                 </Row>

@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
 
 export default function Gosti() {
   const [guests, setGuests] = useState([]);
@@ -13,6 +14,7 @@ export default function Gosti() {
     prezime: "",
     email: "",
   });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const fetchGuests = async () => {
@@ -27,7 +29,23 @@ export default function Gosti() {
     fetchGuests();
   }, []);
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleInputChange = (id, field, value) => {
+    if (field === "email" && !validateEmail(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [id]: "Neispravna email adresa",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [id]: null,
+      }));
+    }
     setGuests((prevGuests) =>
       prevGuests.map((guest) =>
         guest.idGost === id ? { ...guest, [field]: value } : guest
@@ -36,6 +54,10 @@ export default function Gosti() {
   };
 
   const handleUpdateGuest = async (guest) => {
+    if (errors[guest.idGost]) {
+      alert("Molimo ispravite greške prije ažuriranja gosta.");
+      return;
+    }
     try {
       await axios.put(`/api/gost/${guest.idGost}`, guest);
       alert("Gost uspješno ažuriran");
@@ -59,6 +81,17 @@ export default function Gosti() {
   };
 
   const handleNewGuestChange = (field, value) => {
+    if (field === "email" && !validateEmail(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        newGuest: "Neispravna email adresa",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        newGuest: null,
+      }));
+    }
     setNewGuest((prevGuest) => ({
       ...prevGuest,
       [field]: value,
@@ -66,6 +99,10 @@ export default function Gosti() {
   };
 
   const handleCreateGuest = async () => {
+    if (errors.newGuest) {
+      alert("Molimo ispravite greške prije kreiranja gosta.");
+      return;
+    }
     try {
       const response = await axios.post("/api/gost", newGuest);
       setGuests((prevGuests) => [...prevGuests, response.data]);
@@ -85,13 +122,6 @@ export default function Gosti() {
         <div key={guest.idGost}>
           <Form>
             <Row className="align-items-center">
-              <Col>
-                <Form.Group controlId={`formGuestId${guest.idGost}`}>
-                  <Form.Label>ID</Form.Label>
-                  <Form.Control type="text" value={guest.idGost} disabled />
-                </Form.Group>
-              </Col>
-
               <Col>
                 <Form.Group controlId={`formGuestFirstName${guest.idGost}`}>
                   <Form.Label>Ime</Form.Label>
@@ -128,6 +158,11 @@ export default function Gosti() {
                       handleInputChange(guest.idGost, "email", e.target.value)
                     }
                   />
+                  {errors[guest.idGost] && (
+                    <Form.Text className="text-danger">
+                      {errors[guest.idGost]}
+                    </Form.Text>
+                  )}
                 </Form.Group>
               </Col>
 
@@ -187,6 +222,9 @@ export default function Gosti() {
                 value={newGuest.email}
                 onChange={(e) => handleNewGuestChange("email", e.target.value)}
               />
+              {errors.newGuest && (
+                <Form.Text className="text-danger">{errors.newGuest}</Form.Text>
+              )}
             </Form.Group>
           </Col>
 

@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function Detail({ reservation }) {
   const [reservationRooms, setReservationRooms] = useState(null);
   const [alert, setAlert] = useState({ show: false, variant: "", message: "" });
   const [modifiedRooms, setModifiedRooms] = useState([]);
+  const [availableRooms, setAvailableRooms] = useState(null);
+  const [newRoom, setNewRoom] = useState({
+    idSoba: "",
+    cijenaNoci: "",
+    brojGostiju: "",
+    specijalniZahtjevi: "",
+  });
 
   useEffect(() => {
     const fetchReservationRooms = async () => {
@@ -20,7 +28,23 @@ export default function Detail({ reservation }) {
       }
     };
 
-    fetchReservationRooms();
+    const fetchAvailableReservations = async () => {
+      try {
+        const response = await axios.get(
+          `/api/rezervacija/sobe/${reservation.sifraRezervacije}`
+        );
+        setAvailableRooms(response.data);
+      } catch (err) {
+        console.error("Error fetching rezsoba:", err);
+      }
+    };
+
+    const fetchAll = async () => {
+      await fetchReservationRooms();
+      await fetchAvailableReservations();
+    };
+
+    fetchAll();
   }, [reservation]);
 
   const handleUpdate = (roomId) => {
@@ -33,7 +57,7 @@ export default function Detail({ reservation }) {
     setAlert({
       show: true,
       variant: "success",
-      message: "Promjene su spremljene lokalno.",
+      message: "uspjesno.",
     });
   };
 
@@ -72,6 +96,47 @@ export default function Detail({ reservation }) {
     );
   };
 
+  const handleNewRoomChange = (e) => {
+    const { name, value } = e.target;
+    setNewRoom((prevNewRoom) => ({ ...prevNewRoom, [name]: value }));
+  };
+
+  const handleAddRoom = async () => {
+    try {
+      const newRoomData = {
+        sifraRezervacije: reservation.sifraRezervacije,
+        ...newRoom,
+      };
+
+      await axios.post(`/api/rezervacijasoba`, newRoomData);
+
+      // Update available rooms after adding a new room
+      setAvailableRooms((prevRooms) =>
+        prevRooms.filter((room) => room.idSoba !== newRoom.idSoba)
+      );
+
+      setReservationRooms((prevRooms) => [...prevRooms, newRoomData]);
+      setAlert({
+        show: true,
+        variant: "success",
+        message: "Soba je uspješno dodana",
+      });
+
+      setNewRoom({
+        idSoba: "",
+        cijenaNoci: "",
+        brojGostiju: "",
+        specijalniZahtjevi: "",
+      });
+    } catch (err) {
+      setAlert({
+        show: true,
+        variant: "danger",
+        message: "Pogreška prilikom dodavanja sobe",
+      });
+      console.error("Error adding room:", err);
+    }
+  };
   return (
     <Container>
       <h1>Detalji rezervacije</h1>
@@ -91,25 +156,13 @@ export default function Detail({ reservation }) {
               <Row>
                 <Col>
                   <Form.Group controlId={`formRoomId_${room.idSoba}`}>
-                    <Form.Label>id sobe</Form.Label> {/* Room ID */}
+                    <Form.Label>idSoba</Form.Label>
                     <Form.Control type="text" disabled value={room.idSoba} />
                   </Form.Group>
                 </Col>
                 <Col>
-                  <Form.Group controlId={`formReservationId_${room.idSoba}`}>
-                    <Form.Label>Šifra rezervacije</Form.Label>{" "}
-                    {/* Reservation ID */}
-                    <Form.Control
-                      type="text"
-                      disabled
-                      value={room.sifraRezervacije}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col>
                   <Form.Group controlId={`formPrice_${room.idSoba}`}>
-                    <Form.Label>Cijena po noći</Form.Label>{" "}
-                    {/* Price per night */}
+                    <Form.Label>Cijena po noći</Form.Label>
                     <Form.Control
                       type="text"
                       value={
@@ -124,8 +177,7 @@ export default function Detail({ reservation }) {
                 </Col>
                 <Col>
                   <Form.Group controlId={`formGuests_${room.idSoba}`}>
-                    <Form.Label>Broj gostiju</Form.Label>{" "}
-                    {/* Number of Guests */}
+                    <Form.Label>Broj gostiju</Form.Label>
                     <Form.Control
                       type="text"
                       value={
@@ -140,8 +192,7 @@ export default function Detail({ reservation }) {
                 </Col>
                 <Col>
                   <Form.Group controlId={`formSpecialRequests_${room.idSoba}`}>
-                    <Form.Label>Specijalni zahtjevi</Form.Label>{" "}
-                    {/* Special Requests */}
+                    <Form.Label>Specijalni zahtjevi</Form.Label>
                     <Form.Control
                       type="text"
                       value={
@@ -156,26 +207,92 @@ export default function Detail({ reservation }) {
                 </Col>
                 <Col>
                   <Button
-                    variant="warning" // Change variant to 'warning' for yellow color
+                    variant="warning"
                     onClick={() => handleUpdate(room.idSoba)}
                   >
-                    Spremi {/* Change text to 'Spremi' */}
+                    Spremi
                   </Button>{" "}
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(room.idSoba)}
                   >
-                    Izbriši {/* Delete */}
+                    Izbriši
                   </Button>
                 </Col>
               </Row>
             </Form>
-
-            {reservationRooms.length > 1 && <hr />}
+            <hr></hr>
           </div>
         ))
       ) : (
         <p>Loading...</p>
+      )}
+      {availableRooms && availableRooms.length > 0 ? (
+        <>
+          <h2>Dodaj novu sobu</h2>
+          <Form>
+            <Row>
+              <Col>
+                <Form.Group controlId="formNewRoomId">
+                  <Form.Label>id sobe</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="idSoba"
+                    value={newRoom.idSoba}
+                    onChange={handleNewRoomChange}
+                  >
+                    <option value="">Odaberite sobu</option>
+                    {availableRooms.map((room) => (
+                      <option key={room.idSoba} value={room.idSoba}>
+                        {room.idSoba}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formNewPrice">
+                  <Form.Label>Cijena po noći</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="cijenaNoci"
+                    value={newRoom.cijenaNoci}
+                    onChange={handleNewRoomChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formNewGuests">
+                  <Form.Label>Broj gostiju</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="brojGostiju"
+                    value={newRoom.brojGostiju}
+                    onChange={handleNewRoomChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formNewSpecialRequests">
+                  <Form.Label>Specijalni zahtjevi</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="specijalniZahtjevi"
+                    value={newRoom.specijalniZahtjevi}
+                    onChange={handleNewRoomChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Button variant="success" onClick={handleAddRoom}>
+                  Dodaj
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </>
+      ) : (
+        <p>nema slobodnih soba za termin boravka</p>
       )}
     </Container>
   );

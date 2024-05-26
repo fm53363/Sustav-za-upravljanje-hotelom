@@ -1,18 +1,14 @@
 import React from "react";
-
-import {
-  Navbar,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
-  Nav,
-} from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import Home from "./Home";
 import Rezervacije from "./Rezervacije";
 import Gosti from "./Gosti";
+
+function NotFound() {
+  return <h2>Page Not Found</h2>;
+}
 
 export default function Navbarcomp() {
   return (
@@ -43,13 +39,11 @@ export default function Navbarcomp() {
 
       <div>
         <Routes>
-          <Route
-            path="/rezervacije"
-            element={<Rezervacije></Rezervacije>}
-          ></Route>
-          <Route path="/gosti" element={<Gosti></Gosti>}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/rezervacije" element={<Rezervacije />} />
+          <Route path="/gosti" element={<Gosti />} />
 
-          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
