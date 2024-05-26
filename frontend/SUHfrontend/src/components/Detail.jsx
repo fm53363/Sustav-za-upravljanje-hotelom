@@ -47,18 +47,32 @@ export default function Detail({ reservation }) {
     fetchAll();
   }, [reservation]);
 
-  const handleUpdate = (roomId) => {
-    const updatedRooms = reservationRooms.map((room) =>
-      room.idSoba === roomId
-        ? modifiedRooms.find((r) => r.idSoba === roomId) || room
-        : room
-    );
-    setReservationRooms(updatedRooms);
-    setAlert({
-      show: true,
-      variant: "success",
-      message: "uspjesno.",
-    });
+  const handleUpdate = async (roomId) => {
+    const updatedRoom = modifiedRooms.find((room) => room.idSoba === roomId);
+    if (updatedRoom) {
+      try {
+        await axios.put(
+          `/api/rezervacijasoba/${reservation.sifraRezervacije}/${roomId}`,
+          updatedRoom
+        );
+        const updatedRooms = reservationRooms.map((room) =>
+          room.idSoba === roomId ? { ...room, ...updatedRoom } : room
+        );
+        setReservationRooms(updatedRooms);
+        setAlert({
+          show: true,
+          variant: "success",
+          message: "Soba je uspješno ažurirana",
+        });
+      } catch (err) {
+        setAlert({
+          show: true,
+          variant: "danger",
+          message: "Pogreška prilikom ažuriranja sobe",
+        });
+        console.error("Error updating room:", err);
+      }
+    }
   };
 
   const handleDelete = async (roomId) => {
@@ -234,7 +248,7 @@ export default function Detail({ reservation }) {
             <Row>
               <Col>
                 <Form.Group controlId="formNewRoomId">
-                  <Form.Label>id sobe</Form.Label>
+                  <Form.Label>id,tip sobe</Form.Label>
                   <Form.Control
                     as="select"
                     name="idSoba"
@@ -244,7 +258,7 @@ export default function Detail({ reservation }) {
                     <option value="">Odaberite sobu</option>
                     {availableRooms.map((room) => (
                       <option key={room.idSoba} value={room.idSoba}>
-                        {room.idSoba}
+                        {room.idSoba}  {room.tipSobe}
                       </option>
                     ))}
                   </Form.Control>

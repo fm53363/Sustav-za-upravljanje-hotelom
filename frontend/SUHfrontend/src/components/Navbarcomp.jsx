@@ -2,7 +2,6 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import Home from "./Home";
 import Rezervacije from "./Rezervacije";
 import Gosti from "./Gosti";
 
@@ -23,9 +22,6 @@ export default function Navbarcomp() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/">
-                Home
-              </Nav.Link>
               <Nav.Link as={Link} to="/rezervacije">
                 Rezervacije
               </Nav.Link>
@@ -39,7 +35,6 @@ export default function Navbarcomp() {
 
       <div>
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route path="/rezervacije" element={<Rezervacije />} />
           <Route path="/gosti" element={<Gosti />} />
 
