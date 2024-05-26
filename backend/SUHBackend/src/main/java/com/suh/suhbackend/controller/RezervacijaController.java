@@ -56,8 +56,8 @@ public class RezervacijaController {
     }
 
     @GetMapping("/sobe/{id}")
-    public ResponseEntity<List<Soba>> getAllRezervacija(@PathVariable int idRezervacija) {
-        return new ResponseEntity<>(sobaService.dostupneSobe(idRezervacija), HttpStatus.OK);
+    public ResponseEntity<List<Soba>> getAllRezervacija(@PathVariable int id) {
+        return new ResponseEntity<>(sobaService.dostupneSobe(id), HttpStatus.OK);
     }
 }
 
